@@ -1,5 +1,8 @@
 package com.akerimtay.movieapp.data.repository
 
+import com.akerimtay.movieapp.data.BaseResponse
+import com.akerimtay.movieapp.utils.Resource
+
 interface MovieRepository {
-    fun getDummy(): String
+    suspend fun getDummy(): Resource<BaseResponse>
 }

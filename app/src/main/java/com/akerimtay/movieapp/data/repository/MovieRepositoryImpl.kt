@@ -1,9 +1,10 @@
 package com.akerimtay.movieapp.data.repository
 
-import com.akerimtay.movieapp.data.remote.MovieApi
+import com.akerimtay.movieapp.data.remote.datasource.MovieRemoteDataSource
 
-class MovieRepositoryImpl(private val api: MovieApi) : MovieRepository {
-    override fun getDummy(): String {
-        return "Hello World"
-    }
+class MovieRepositoryImpl(
+    private val remoteDataSource: MovieRemoteDataSource
+) : MovieRepository {
+
+    override suspend fun getDummy() = remoteDataSource.getDummy()
 }
