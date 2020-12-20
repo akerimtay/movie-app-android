@@ -1,6 +1,6 @@
 package com.akerimtay.movieapp.data.repository
 
-import com.akerimtay.movieapp.data.remote.datasource.MovieRemoteDataSource
+import com.akerimtay.movieapp.data.network.datasource.MovieRemoteDataSource
 
 class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource

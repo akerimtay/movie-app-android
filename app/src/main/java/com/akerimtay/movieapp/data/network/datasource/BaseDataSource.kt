@@ -1,4 +1,4 @@
-package com.akerimtay.movieapp.data.remote.datasource
+package com.akerimtay.movieapp.data.network.datasource
 
 import com.akerimtay.movieapp.utils.Resource
 import retrofit2.Response
