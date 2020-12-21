@@ -1,8 +1,7 @@
 package com.akerimtay.movieapp.data.repository
 
-import com.akerimtay.movieapp.data.BaseResponse
-import com.akerimtay.movieapp.utils.Resource
+import com.akerimtay.movieapp.data.model.Result
 
 interface MovieRepository {
-    suspend fun getDummy(): Resource<BaseResponse>
+    suspend fun getTopRated(): Result
 }

@@ -6,5 +6,5 @@ class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource
 ) : MovieRepository {
 
-    override suspend fun getDummy() = remoteDataSource.getDummy()
+    override suspend fun getTopRated() = remoteDataSource.getTopRated()
 }

@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.databinding.FragmentHomeBinding
+import com.akerimtay.movieapp.utils.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -26,6 +27,20 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadData()
+        viewModel.movies.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+
+                }
+                Resource.Status.SUCCESS -> {
+
+                }
+                Resource.Status.ERROR -> {
+
+                }
+            }
+        }
+
+        viewModel.loadTopRatedMovies()
     }
 }
