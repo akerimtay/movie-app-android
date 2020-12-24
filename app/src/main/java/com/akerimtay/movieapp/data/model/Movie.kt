@@ -6,6 +6,14 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
+data class Movies(
+    @SerializedName("page") val page: Int,
+    @SerializedName("total_pages") val totalPages: Int,
+    @SerializedName("total_results") val totalResults: Int,
+    @SerializedName("results") val movies: List<Movie>
+) : Parcelable
+
+@Parcelize
 data class Movie(
     @SerializedName("id") val id: Int,
     @SerializedName("adult") val isAdult: Boolean,

@@ -40,7 +40,5 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
-        viewModel.loadTopRatedMovies()
     }
 }

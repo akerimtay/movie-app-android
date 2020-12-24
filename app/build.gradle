@@ -25,13 +25,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "REST_URL", '"https://api.themoviedb.org"'
+            buildConfigField "String", "REST_URL", '"https://api.themoviedb.org/3/"'
             buildConfigField "String", "API_KEY", '"f222e97f710f0888bf9023a2fed819dd"'
         }
         debug {
             applicationIdSuffix ".debug"
             debuggable true
-            buildConfigField "String", "REST_URL", '"https://api.themoviedb.org"'
+            buildConfigField "String", "REST_URL", '"https://api.themoviedb.org/3/"'
             buildConfigField "String", "API_KEY", '"f222e97f710f0888bf9023a2fed819dd"'
         }
     }
