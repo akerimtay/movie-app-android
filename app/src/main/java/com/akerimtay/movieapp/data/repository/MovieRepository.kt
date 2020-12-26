@@ -5,4 +5,6 @@ import com.akerimtay.movieapp.data.Resource
 
 interface MovieRepository {
     suspend fun getTopRated(): Resource<Movies>
+
+    suspend fun getNowPlaying(): Resource<Movies>
 }

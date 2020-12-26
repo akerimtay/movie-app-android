@@ -6,4 +6,5 @@
     <string name="error_not_found">Данные не найдены</string>
     <string name="error_timeout">Время подключения истекло</string>
     <string name="top_rated">Рейтинговые</string>
+    <string name="now_playing">Сейчас на экранах</string>
 </resources>

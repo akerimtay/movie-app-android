@@ -4,4 +4,6 @@ import com.akerimtay.movieapp.data.network.api.MovieApi
 
 class MovieRemoteDataSource(private val movieApi: MovieApi) {
     suspend fun getTopRated() = movieApi.getTopRated()
+
+    suspend fun getNowPlaying() = movieApi.getNowPlaying()
 }
