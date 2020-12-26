@@ -22,15 +22,60 @@
             android:background="@color/blue_grey_900"
             android:orientation="vertical">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/indigo_300">
+
+                <TextView
+                    android:id="@+id/txt_hello"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="36dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:text="@string/home_page_hello"
+                    android:textColor="@color/white_100"
+                    android:textSize="26sp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="36dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="36dp"
+                    android:autofillHints="@string/search"
+                    android:background="@drawable/rectangle_corners_white"
+                    android:drawableStart="@drawable/ic_baseline_search_24_white"
+                    android:drawablePadding="16dp"
+                    android:hint="@string/search"
+                    android:inputType="textAutoComplete|textCapSentences"
+                    android:padding="8dp"
+                    android:textColor="@color/white_100"
+                    android:textColorHint="@color/white_60"
+                    app:layout_constraintBottom_toTopOf="@id/view_round"
+                    app:layout_constraintTop_toBottomOf="@id/txt_hello" />
+
+                <View
+                    android:id="@+id/view_round"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/rectangle_corners_blue_grey_300"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_percent=".1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/top_rated"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/white_100"
                 android:textSize="16sp"
                 android:visibility="@{viewModel.topRatedMovies.data.movies.size() > 0}" />
 
@@ -53,7 +98,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/now_playing"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/white_100"
                 android:textSize="16sp"
                 android:visibility="@{viewModel.nowPlayingMovies.data.movies.size() > 0}" />
 
@@ -76,7 +121,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/popular"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/white_100"
                 android:textSize="16sp"
                 android:visibility="@{viewModel.popularMovies.data.movies.size() > 0}" />
 

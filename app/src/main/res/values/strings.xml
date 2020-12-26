@@ -8,4 +8,6 @@
     <string name="top_rated">Рейтинговые</string>
     <string name="now_playing">Сейчас на экранах</string>
     <string name="popular">Популярные</string>
+    <string name="home_page_hello">Привет, что ты хочешь посмотреть?</string>
+    <string name="search">Поиск</string>
 </resources>
