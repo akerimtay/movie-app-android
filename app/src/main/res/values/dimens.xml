@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radius_value">20dp</dimen>
+    <dimen name="item_movie_width">140dp</dimen>
+    <dimen name="item_movie_height">180dp</dimen>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.akerimtay.movieapp.data.model.Movie" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/item_movie_width"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        tools:background="@color/blue_grey_900">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="@dimen/item_movie_width"
+            android:layout_height="@dimen/item_movie_height"
+            android:scaleType="centerCrop"
+            app:loadW500Image="@{movie.posterPath}"
+            app:placeholder="@{@drawable/placeholder_poster}"
+            app:riv_corner_radius="@dimen/radius_value"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/open_sans_semibold"
+            android:lines="2"
+            android:text="@{movie.title}"
+            android:textColor="@color/white_100"
+            android:textSize="13sp"
+            tools:text="Avengers: Endgame" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:text="@{movie.vote}"
+            android:textColor="@color/white_100"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_round_star_24_yellow"
+            tools:text="6.5" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,22 +1,27 @@
 package com.akerimtay.movieapp.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.akerimtay.movieapp.data.BaseResponse
+import androidx.lifecycle.liveData
+import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.repository.MovieRepository
-import com.akerimtay.movieapp.utils.Resource
-import kotlinx.coroutines.launch
 
-class HomeViewModel(private val movieRepository: MovieRepository) : ViewModel() {
-    private val _data = MutableLiveData<Resource<BaseResponse>>()
-    val data: LiveData<Resource<BaseResponse>>
-        get() = _data
+class HomeViewModel(
+    private val movieRepository: MovieRepository
+) : ViewModel() {
 
-    fun loadData() {
-        viewModelScope.launch {
-            _data.value = movieRepository.getDummy()
-        }
+    val topRatedMovies = liveData {
+        emit(Resource.loading(null))
+        emit(movieRepository.getTopRated())
     }
+
+    val nowPlayingMovies = liveData {
+        emit(Resource.loading(null))
+        emit(movieRepository.getNowPlaying())
+    }
+
+    val popularMovies = liveData {
+        emit(Resource.loading(null))
+        emit(movieRepository.getPopular())
+    }
+
 }

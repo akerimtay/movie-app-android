@@ -1,4 +1,4 @@
-package com.akerimtay.movieapp.utils
+package com.akerimtay.movieapp.data
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 
