@@ -31,10 +31,33 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="@{viewModel.movies.data.movies.size() > 0}" />
+                android:visibility="@{viewModel.topRatedMovies.data.movies.size() > 0}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/top_rated_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movie"
+                tools:paddingStart="24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/now_playing"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="@{viewModel.nowPlayingMovies.data.movies.size() > 0}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/now_playing_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

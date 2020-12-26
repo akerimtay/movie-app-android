@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.akerimtay.movieapp.R
+import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.databinding.FragmentHomeBinding
 import com.akerimtay.movieapp.extensions.dpToPx
-import com.akerimtay.movieapp.data.Resource
-import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import com.akerimtay.movieapp.extensions.showToast
+import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -19,6 +19,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var topRatedMoviesAdapter: MoviesAdapter
+    private lateinit var nowPlayingMoviesAdapter: MoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,26 +35,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViews()
-
-        viewModel.movies.observe(viewLifecycleOwner) { resource ->
-            when (resource.status) {
-                Resource.Status.LOADING -> {
-
-                }
-                Resource.Status.SUCCESS -> {
-                    resource.data?.movies?.let {
-                        topRatedMoviesAdapter.setItems(it)
-                    }
-                }
-                Resource.Status.ERROR -> {
-                    showToast(resource.message)
-                }
-            }
-        }
+        observeViewModel()
     }
 
     private fun setupRecyclerViews() {
         val spacing = requireContext().dpToPx(24)
+        val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL)
 
         topRatedMoviesAdapter = MoviesAdapter {
             showToast(it.title)
@@ -61,7 +48,45 @@ class HomeFragment : Fragment() {
         binding.topRatedRecycler.apply {
             setHasFixedSize(true)
             adapter = topRatedMoviesAdapter
-            addItemDecoration(SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL))
+            addItemDecoration(itemDecoration)
+        }
+
+        nowPlayingMoviesAdapter = MoviesAdapter {
+            showToast(it.title)
+        }
+        binding.nowPlayingRecycler.apply {
+            setHasFixedSize(true)
+            adapter = nowPlayingMoviesAdapter
+            addItemDecoration(itemDecoration)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.topRatedMovies.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+
+                }
+                Resource.Status.SUCCESS -> {
+                    resource.data?.movies?.let { topRatedMoviesAdapter.setItems(it) }
+                }
+                Resource.Status.ERROR -> {
+                    showToast(resource.message)
+                }
+            }
+        }
+        viewModel.nowPlayingMovies.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+
+                }
+                Resource.Status.SUCCESS -> {
+                    resource.data?.movies?.let { nowPlayingMoviesAdapter.setItems(it) }
+                }
+                Resource.Status.ERROR -> {
+                    showToast(resource.message)
+                }
+            }
         }
     }
 }
