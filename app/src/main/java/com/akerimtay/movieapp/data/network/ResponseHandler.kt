@@ -2,7 +2,7 @@ package com.akerimtay.movieapp.data.network
 
 import com.akerimtay.movieapp.App
 import com.akerimtay.movieapp.R
-import com.akerimtay.movieapp.utils.Resource
+import com.akerimtay.movieapp.data.Resource
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 

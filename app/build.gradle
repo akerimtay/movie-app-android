@@ -26,12 +26,14 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "REST_URL", '"https://api.themoviedb.org/3/"'
+            buildConfigField "String", "IMAGE_URL", '"https://image.tmdb.org/t/p/"'
             buildConfigField "String", "API_KEY", '"f222e97f710f0888bf9023a2fed819dd"'
         }
         debug {
             applicationIdSuffix ".debug"
             debuggable true
             buildConfigField "String", "REST_URL", '"https://api.themoviedb.org/3/"'
+            buildConfigField "String", "IMAGE_URL", '"https://image.tmdb.org/t/p/"'
             buildConfigField "String", "API_KEY", '"f222e97f710f0888bf9023a2fed819dd"'
         }
     }
@@ -104,4 +106,12 @@ dependencies {
     def navigation_version = "2.3.2"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    // Rounded Image View
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //Glide
+    def glide_version = "4.11.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 }

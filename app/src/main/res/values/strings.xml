@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">MovieApp</string>
+    <string name="app_name">Movie App</string>
     <string name="details">Детали</string>
     <string name="something_went_wrong">Что-то пошло не так</string>
     <string name="error_invalid_api_key">Некорректный API-ключ</string>
     <string name="error_not_found">Данные не найдены</string>
     <string name="error_timeout">Время подключения истекло</string>
+    <string name="top_rated">Рейтинговые</string>
 </resources>

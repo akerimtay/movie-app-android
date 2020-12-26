@@ -3,7 +3,7 @@ package com.akerimtay.movieapp.data.repository
 import com.akerimtay.movieapp.data.model.Movies
 import com.akerimtay.movieapp.data.network.ResponseHandler
 import com.akerimtay.movieapp.data.network.datasource.MovieRemoteDataSource
-import com.akerimtay.movieapp.utils.Resource
+import com.akerimtay.movieapp.data.Resource
 
 class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource,

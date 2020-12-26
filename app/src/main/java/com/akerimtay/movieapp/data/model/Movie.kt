@@ -3,6 +3,7 @@ package com.akerimtay.movieapp.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import java.math.RoundingMode
 import java.util.*
 
 @Parcelize
@@ -29,4 +30,10 @@ data class Movie(
     @SerializedName("video") val video: Boolean,
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
-) : Parcelable
+) : Parcelable {
+
+    fun getVote(): String {
+        return voteAverage.toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString()
+    }
+
+}
