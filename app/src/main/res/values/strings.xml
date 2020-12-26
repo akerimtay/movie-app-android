@@ -7,4 +7,5 @@
     <string name="error_timeout">Время подключения истекло</string>
     <string name="top_rated">Рейтинговые</string>
     <string name="now_playing">Сейчас на экранах</string>
+    <string name="popular">Популярные</string>
 </resources>

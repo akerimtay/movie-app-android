@@ -9,4 +9,7 @@ interface MovieApi {
 
     @GET("movie/now_playing")
     suspend fun getNowPlaying(): Movies
+
+    @GET("movie/popular")
+    suspend fun getPopular(): Movies
 }
