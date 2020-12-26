@@ -8,8 +8,16 @@ class AuthInterceptor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         val builder = request.url.newBuilder()
-        val url = builder.addQueryParameter("api_key", BuildConfig.API_KEY).build()
+        val url = builder.addQueryParameter("api_key", BuildConfig.API_KEY)
+            .addQueryParameter("language", LANGUAGE)
+            .addQueryParameter("region", REGION)
+            .build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)
+    }
+
+    companion object {
+        private const val LANGUAGE = "ru-RU"
+        private const val REGION = "KZ"
     }
 }

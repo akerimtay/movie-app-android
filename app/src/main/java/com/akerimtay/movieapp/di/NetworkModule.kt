@@ -1,8 +1,10 @@
 package com.akerimtay.movieapp.di
 
 import com.akerimtay.movieapp.BuildConfig
+import com.akerimtay.movieapp.data.network.ResponseHandler
 import com.akerimtay.movieapp.data.network.api.MovieApi
 import com.akerimtay.movieapp.data.network.interceptor.AuthInterceptor
+import com.akerimtay.movieapp.data.network.mapping.DateSerializer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -10,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 val networkModule = module {
@@ -40,7 +43,9 @@ val networkModule = module {
     }
 
     fun provideGson(): Gson {
-        return GsonBuilder().create()
+        val builder = GsonBuilder()
+        builder.registerTypeAdapter(Date::class.java, DateSerializer())
+        return builder.create()
     }
 
     fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit {
@@ -58,6 +63,8 @@ val networkModule = module {
     single { provideOkHttpClient(get(), get()) }
     single { provideGson() }
     single { provideRetrofit(get(), get()) }
+
+    factory { ResponseHandler() }
 }
 
 val apiModule = module {
