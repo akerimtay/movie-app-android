@@ -19,4 +19,9 @@ class HomeViewModel(
         emit(movieRepository.getNowPlaying())
     }
 
+    val popularMovies = liveData {
+        emit(Resource.loading(null))
+        emit(movieRepository.getPopular())
+    }
+
 }

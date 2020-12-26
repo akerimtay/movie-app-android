@@ -28,4 +28,13 @@ class MovieRepositoryImpl(
         }
     }
 
+    override suspend fun getPopular(): Resource<Movies> {
+        return try {
+            val response = remoteDataSource.getPopular()
+            return responseHandler.handleSuccess(response)
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
 }

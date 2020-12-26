@@ -7,4 +7,6 @@ interface MovieRepository {
     suspend fun getTopRated(): Resource<Movies>
 
     suspend fun getNowPlaying(): Resource<Movies>
+
+    suspend fun getPopular(): Resource<Movies>
 }

@@ -4,6 +4,7 @@ import com.akerimtay.movieapp.App
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
 import retrofit2.HttpException
+import timber.log.Timber
 import java.net.SocketTimeoutException
 
 enum class NetworkErrors(val code: Int) {
@@ -19,6 +20,7 @@ open class ResponseHandler {
     }
 
     fun <T : Any> handleException(e: Exception): Resource<T> {
+        Timber.e("Error message = ${e.cause?.message}")
         return when (e) {
             is HttpException -> Resource.error(getErrorMessage(e.code()), null)
             is SocketTimeoutException -> Resource.error(

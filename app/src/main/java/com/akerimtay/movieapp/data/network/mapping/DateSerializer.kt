@@ -5,15 +5,33 @@ import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateSerializer : JsonSerializer<Date> {
+class DateSerializer : JsonSerializer<Date>, JsonDeserializer<Date?> {
     override fun serialize(
         src: Date?,
         typeOfSrc: Type?,
         context: JsonSerializationContext?
     ): JsonElement {
         if (src != null) {
-            return JsonPrimitive(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(src))
+            return JsonPrimitive(simpleDateFormat.format(src))
         }
         return JsonNull.INSTANCE
+    }
+
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): Date? {
+        if (json != null) {
+            val value = json.asString
+            if (!value.isNullOrEmpty()) {
+                return simpleDateFormat.parse(value)
+            }
+        }
+        return null
+    }
+
+    companion object {
+        private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     }
 }

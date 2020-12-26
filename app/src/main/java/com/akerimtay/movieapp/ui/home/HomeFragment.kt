@@ -20,6 +20,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var topRatedMoviesAdapter: MoviesAdapter
     private lateinit var nowPlayingMoviesAdapter: MoviesAdapter
+    private lateinit var popularMoviesAdapter: MoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +43,7 @@ class HomeFragment : Fragment() {
         val spacing = requireContext().dpToPx(24)
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL)
 
+        // Top rated movies
         topRatedMoviesAdapter = MoviesAdapter {
             showToast(it.title)
         }
@@ -51,12 +53,23 @@ class HomeFragment : Fragment() {
             addItemDecoration(itemDecoration)
         }
 
+        // Now playing movies
         nowPlayingMoviesAdapter = MoviesAdapter {
             showToast(it.title)
         }
         binding.nowPlayingRecycler.apply {
             setHasFixedSize(true)
             adapter = nowPlayingMoviesAdapter
+            addItemDecoration(itemDecoration)
+        }
+
+        // Popular movies
+        popularMoviesAdapter = MoviesAdapter {
+            showToast(it.title)
+        }
+        binding.popularRecycler.apply {
+            setHasFixedSize(true)
+            adapter = popularMoviesAdapter
             addItemDecoration(itemDecoration)
         }
     }
@@ -82,6 +95,19 @@ class HomeFragment : Fragment() {
                 }
                 Resource.Status.SUCCESS -> {
                     resource.data?.movies?.let { nowPlayingMoviesAdapter.setItems(it) }
+                }
+                Resource.Status.ERROR -> {
+                    showToast(resource.message)
+                }
+            }
+        }
+        viewModel.popularMovies.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+
+                }
+                Resource.Status.SUCCESS -> {
+                    resource.data?.movies?.let { popularMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
                     showToast(resource.message)
