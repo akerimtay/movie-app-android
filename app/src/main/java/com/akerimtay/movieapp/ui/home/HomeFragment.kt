@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.akerimtay.movieapp.R
@@ -78,12 +79,14 @@ class HomeFragment : Fragment() {
         viewModel.topRatedMovies.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-
+                    binding.progressTopRated.isVisible = true
                 }
                 Resource.Status.SUCCESS -> {
+                    binding.progressTopRated.isVisible = false
                     resource.data?.movies?.let { topRatedMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
+                    binding.progressTopRated.isVisible = false
                     showToast(resource.message)
                 }
             }
@@ -91,12 +94,14 @@ class HomeFragment : Fragment() {
         viewModel.nowPlayingMovies.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-
+                    binding.progressNowPlaying.isVisible = true
                 }
                 Resource.Status.SUCCESS -> {
+                    binding.progressNowPlaying.isVisible = false
                     resource.data?.movies?.let { nowPlayingMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
+                    binding.progressNowPlaying.isVisible = false
                     showToast(resource.message)
                 }
             }
@@ -104,12 +109,14 @@ class HomeFragment : Fragment() {
         viewModel.popularMovies.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-
+                    binding.progressPopular.isVisible = true
                 }
                 Resource.Status.SUCCESS -> {
+                    binding.progressPopular.isVisible = false
                     resource.data?.movies?.let { popularMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
+                    binding.progressPopular.isVisible = false
                     showToast(resource.message)
                 }
             }
