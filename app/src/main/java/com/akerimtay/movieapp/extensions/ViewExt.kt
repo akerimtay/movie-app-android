@@ -18,6 +18,15 @@ fun ImageView.loadW500Image(path: String?, placeholder: Drawable?) {
         .into(this)
 }
 
+@BindingAdapter(value = ["loadW185Image", "placeholder"], requireAll = false)
+fun ImageView.loadW185Image(path: String?, placeholder: Drawable?) {
+    val url = BuildConfig.IMAGE_URL + "w185" + path
+    Glide.with(context)
+        .load(url)
+        .placeholder(placeholder)
+        .into(this)
+}
+
 fun ImageView.loadOriginalImage(
     path: String?,
     placeholder: Drawable?,

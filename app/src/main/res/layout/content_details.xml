@@ -21,14 +21,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/big_margin"
             android:layout_marginTop="@dimen/big_margin"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/common_margin">
+                android:layout_marginHorizontal="@dimen/big_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -66,6 +65,7 @@
                 android:id="@+id/btn_official_page"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_height"
+                android:layout_marginHorizontal="@dimen/big_margin"
                 android:layout_marginTop="@dimen/common_margin"
                 android:background="@drawable/ripple_corners_white_30"
                 android:fontFamily="@font/open_sans"
@@ -76,6 +76,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/big_margin"
                 android:layout_marginTop="@dimen/common_margin"
                 android:alpha=".7"
                 android:fontFamily="@font/open_sans"
@@ -85,9 +86,21 @@
                 tools:maxLines="5"
                 tools:text="@tools:sample/lorem/random" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/credit_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_margin"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_credit"
+                tools:paddingStart="16dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/big_margin"
                 android:layout_marginTop="@dimen/common_margin"
                 android:orientation="horizontal">
 

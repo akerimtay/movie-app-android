@@ -14,8 +14,10 @@ import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.model.MovieFull
 import com.akerimtay.movieapp.databinding.FragmentDetailsBinding
+import com.akerimtay.movieapp.extensions.dpToPx
 import com.akerimtay.movieapp.extensions.loadOriginalImage
 import com.akerimtay.movieapp.extensions.showToast
+import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import com.akerimtay.movieapp.utils.getBrowserIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,6 +26,8 @@ class DetailsFragment : Fragment() {
 
     private val viewModel: DetailsViewModel by viewModel()
     private val navArgs: DetailsFragmentArgs by navArgs()
+
+    private lateinit var creditsAdapter: CreditsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +48,20 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerViews()
         observeViews()
         observeViewModel()
+    }
+
+    private fun setupRecyclerViews() {
+        val spacing = requireContext().dpToPx(24)
+        val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL)
+
+        creditsAdapter = CreditsAdapter()
+        binding.contentDetails.creditRecycler.apply {
+            adapter = creditsAdapter
+            addItemDecoration(itemDecoration)
+        }
     }
 
     private fun observeViews() {
@@ -71,13 +87,11 @@ class DetailsFragment : Fragment() {
         viewModel.credits.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-
                 }
                 Resource.Status.SUCCESS -> {
-
+                    resource.data?.getCastAndCrew()?.let { creditsAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
-
                     showToast(resource.message)
                 }
             }
