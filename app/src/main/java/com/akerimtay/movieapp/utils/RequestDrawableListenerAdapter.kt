@@ -16,6 +16,7 @@ class RequestDrawableListenerAdapter(
         target: Target<Drawable>?,
         isFirstResource: Boolean
     ): Boolean {
+        listener?.let { it() }
         return false
     }
 

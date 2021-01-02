@@ -10,4 +10,9 @@
     <string name="popular">Популярные</string>
     <string name="home_page_hello">Привет, что ты хочешь посмотреть?</string>
     <string name="search">Поиск</string>
+    <string name="navigate_to_site">Посетить сайт</string>
+    <string name="movie_runtime_format">%dч %dмин</string>
+    <string name="studio">Студия</string>
+    <string name="genres">Жанры</string>
+    <string name="release_date">Год выпуска</string>
 </resources>
