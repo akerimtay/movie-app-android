@@ -117,7 +117,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun openMovieDetailsPage(movie: Movie) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movie.id, movie)
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movie.id)
         findNavController().navigate(action)
     }
 }

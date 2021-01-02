@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.akerimtay.movieapp.R
+import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.databinding.FragmentDetailsBinding
+import com.akerimtay.movieapp.extensions.showToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : Fragment() {
@@ -20,7 +23,8 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.movie.value = navArgs.movie
+        val movieId = navArgs.movieId
+        viewModel.setMovieId(movieId)
     }
 
     override fun onCreateView(
@@ -36,6 +40,28 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViews()
+        observeViewModel()
+    }
+
+    private fun observeViews() {
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+    }
+
+    private fun observeViewModel() {
+        viewModel.movie.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+                    binding.progressView.isVisible = true
+                }
+                Resource.Status.SUCCESS -> {
+                    binding.progressView.isVisible = false
+                }
+                Resource.Status.ERROR -> {
+                    binding.progressView.isVisible = false
+                    showToast(resource.message)
+                }
+            }
+        }
     }
 }

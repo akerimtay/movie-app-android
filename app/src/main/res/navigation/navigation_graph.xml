@@ -27,11 +27,6 @@
             android:name="movieId"
             app:argType="integer" />
 
-        <argument
-            android:name="movie"
-            app:argType="com.akerimtay.movieapp.data.model.Movie"
-            app:nullable="true" />
-
     </fragment>
 
 </navigation>

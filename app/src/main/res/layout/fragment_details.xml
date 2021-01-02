@@ -53,7 +53,7 @@
                     app:layout_collapseMode="pin"
                     app:navigationIcon="@drawable/ic_round_arrow_back_ios_new_24_white"
                     app:popupTheme="@style/Theme.MovieApp.PopupOverlay"
-                    app:title="@{viewModel.movie.title}"
+                    app:title="@{viewModel.movie.data.title}"
                     tools:title="Aquaman" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -64,6 +64,10 @@
             android:id="@+id/content_details"
             layout="@layout/content_details"
             app:viewModel="@{viewModel}" />
+
+        <include
+            android:id="@+id/progress_view"
+            layout="@layout/content_progress_view" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
