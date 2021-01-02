@@ -12,4 +12,6 @@ class MovieRemoteDataSource(private val movieApi: MovieApi) {
 
     suspend fun getPopular() = movieApi.getPopular()
 
+    suspend fun getSimilar(movieId: Int) = movieApi.getSimilar(movieId)
+
 }

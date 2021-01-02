@@ -27,6 +27,12 @@ class DetailsViewModel(
         }
     }
 
+    val similarMovies = movieId.switchMap { id ->
+        liveData {
+            emit(movieRepository.getSimilar(id))
+        }
+    }
+
     fun setMovieId(id: Int) {
         _movieId.value = id
     }

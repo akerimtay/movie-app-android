@@ -19,4 +19,6 @@ interface MovieApi {
     @GET("movie/popular")
     suspend fun getPopular(): Movies
 
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilar(@Path("movie_id") movieId: Int): Movies
 }

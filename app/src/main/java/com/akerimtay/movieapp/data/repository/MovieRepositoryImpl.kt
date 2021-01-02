@@ -47,4 +47,13 @@ class MovieRepositoryImpl(
         }
     }
 
+    override suspend fun getSimilar(movieId: Int): Resource<Movies> {
+        return try {
+            val response = remoteDataSource.getSimilar(movieId)
+            return responseHandler.handleSuccess(response)
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
 }

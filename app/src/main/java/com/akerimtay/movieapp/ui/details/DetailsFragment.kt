@@ -77,5 +77,19 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+        viewModel.similarMovies.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+
+                }
+                Resource.Status.SUCCESS -> {
+
+                }
+                Resource.Status.ERROR -> {
+
+                    showToast(resource.message)
+                }
+            }
+        }
     }
 }

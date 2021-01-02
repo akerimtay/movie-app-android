@@ -14,4 +14,6 @@ interface MovieRepository {
 
     suspend fun getPopular(): Resource<Movies>
 
+    suspend fun getSimilar(movieId: Int): Resource<Movies>
+
 }
