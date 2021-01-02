@@ -12,11 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
+import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.data.model.MovieFull
 import com.akerimtay.movieapp.databinding.FragmentDetailsBinding
 import com.akerimtay.movieapp.extensions.dpToPx
 import com.akerimtay.movieapp.extensions.loadOriginalImage
 import com.akerimtay.movieapp.extensions.showToast
+import com.akerimtay.movieapp.ui.home.MoviesAdapter
 import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import com.akerimtay.movieapp.utils.getBrowserIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +30,7 @@ class DetailsFragment : Fragment() {
     private val navArgs: DetailsFragmentArgs by navArgs()
 
     private lateinit var creditsAdapter: CreditsAdapter
+    private lateinit var similarAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +60,17 @@ class DetailsFragment : Fragment() {
         val spacing = requireContext().dpToPx(24)
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL)
 
+        // Credits
         creditsAdapter = CreditsAdapter()
         binding.contentDetails.creditRecycler.apply {
             adapter = creditsAdapter
+            addItemDecoration(itemDecoration)
+        }
+
+        // Similar movies
+        similarAdapter = MoviesAdapter { openMovieDetailsPage(it) }
+        binding.contentDetails.similarRecycler.apply {
+            adapter = similarAdapter
             addItemDecoration(itemDecoration)
         }
     }
@@ -99,13 +110,11 @@ class DetailsFragment : Fragment() {
         viewModel.similarMovies.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-
                 }
                 Resource.Status.SUCCESS -> {
-
+                    resource.data?.movies?.let { similarAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
-
                     showToast(resource.message)
                 }
             }
@@ -121,5 +130,9 @@ class DetailsFragment : Fragment() {
         binding.contentDetails.btnOfficialPage.setOnClickListener {
             startActivity(getBrowserIntent(movie.homepage))
         }
+    }
+
+    private fun openMovieDetailsPage(movie: Movie) {
+
     }
 }

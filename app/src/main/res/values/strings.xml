@@ -15,4 +15,5 @@
     <string name="studio">Студия</string>
     <string name="genres">Жанры</string>
     <string name="release_date">Год выпуска</string>
+    <string name="similar">Похожие</string>
 </resources>
