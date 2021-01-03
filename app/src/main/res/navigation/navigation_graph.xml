@@ -13,11 +13,7 @@
 
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:destination="@id/detailsFragment" />
 
     </fragment>
 
@@ -25,6 +21,12 @@
         android:id="@+id/detailsFragment"
         android:name="com.akerimtay.movieapp.ui.details.DetailsFragment"
         android:label=""
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details">
+
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+
+    </fragment>
 
 </navigation>

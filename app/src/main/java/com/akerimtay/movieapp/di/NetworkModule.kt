@@ -2,6 +2,7 @@ package com.akerimtay.movieapp.di
 
 import com.akerimtay.movieapp.BuildConfig
 import com.akerimtay.movieapp.data.network.ResponseHandler
+import com.akerimtay.movieapp.data.network.api.CreditApi
 import com.akerimtay.movieapp.data.network.api.MovieApi
 import com.akerimtay.movieapp.data.network.interceptor.AuthInterceptor
 import com.akerimtay.movieapp.data.network.mapping.DateSerializer
@@ -68,9 +69,10 @@ val networkModule = module {
 }
 
 val apiModule = module {
-    fun provideMovieApi(retrofit: Retrofit): MovieApi {
-        return retrofit.create(MovieApi::class.java)
-    }
+    fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
+
+    fun provideCreditApi(retrofit: Retrofit): CreditApi = retrofit.create(CreditApi::class.java)
 
     single { provideMovieApi(get()) }
+    single { provideCreditApi(get()) }
 }

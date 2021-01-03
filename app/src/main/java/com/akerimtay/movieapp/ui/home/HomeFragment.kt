@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
+import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.databinding.FragmentHomeBinding
 import com.akerimtay.movieapp.extensions.dpToPx
 import com.akerimtay.movieapp.extensions.showToast
@@ -45,31 +47,22 @@ class HomeFragment : Fragment() {
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL)
 
         // Top rated movies
-        topRatedMoviesAdapter = MoviesAdapter {
-            showToast(it.title)
-        }
+        topRatedMoviesAdapter = MoviesAdapter { openMovieDetailsPage(it) }
         binding.topRatedRecycler.apply {
-            setHasFixedSize(true)
             adapter = topRatedMoviesAdapter
             addItemDecoration(itemDecoration)
         }
 
         // Now playing movies
-        nowPlayingMoviesAdapter = MoviesAdapter {
-            showToast(it.title)
-        }
+        nowPlayingMoviesAdapter = MoviesAdapter { openMovieDetailsPage(it) }
         binding.nowPlayingRecycler.apply {
-            setHasFixedSize(true)
             adapter = nowPlayingMoviesAdapter
             addItemDecoration(itemDecoration)
         }
 
         // Popular movies
-        popularMoviesAdapter = MoviesAdapter {
-            showToast(it.title)
-        }
+        popularMoviesAdapter = MoviesAdapter { openMovieDetailsPage(it) }
         binding.popularRecycler.apply {
-            setHasFixedSize(true)
             adapter = popularMoviesAdapter
             addItemDecoration(itemDecoration)
         }
@@ -121,5 +114,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openMovieDetailsPage(movie: Movie) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movie.id)
+        findNavController().navigate(action)
     }
 }
