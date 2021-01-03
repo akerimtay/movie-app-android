@@ -16,4 +16,5 @@
     <string name="genres">Жанры</string>
     <string name="release_date">Год выпуска</string>
     <string name="similar">Похожие</string>
+    <string name="on_dev">Разработчики работают над этим</string>
 </resources>

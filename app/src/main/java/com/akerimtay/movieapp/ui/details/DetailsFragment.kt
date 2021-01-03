@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
-import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.data.model.MovieFull
 import com.akerimtay.movieapp.databinding.FragmentDetailsBinding
 import com.akerimtay.movieapp.extensions.dpToPx
@@ -68,7 +67,10 @@ class DetailsFragment : Fragment() {
         }
 
         // Similar movies
-        similarAdapter = MoviesAdapter { openMovieDetailsPage(it) }
+        similarAdapter = MoviesAdapter {
+            //TODO Handle click
+            showToast(R.string.on_dev)
+        }
         binding.contentDetails.similarRecycler.apply {
             adapter = similarAdapter
             addItemDecoration(itemDecoration)
@@ -130,9 +132,5 @@ class DetailsFragment : Fragment() {
         binding.contentDetails.btnOfficialPage.setOnClickListener {
             startActivity(getBrowserIntent(movie.homepage))
         }
-    }
-
-    private fun openMovieDetailsPage(movie: Movie) {
-
     }
 }
