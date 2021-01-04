@@ -1,61 +1,35 @@
 package com.akerimtay.movieapp.data.repository
 
-import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.datasource.MovieLocalDataSource
 import com.akerimtay.movieapp.data.datasource.MovieRemoteDataSource
-import com.akerimtay.movieapp.data.model.MovieFull
-import com.akerimtay.movieapp.data.model.Movies
-import com.akerimtay.movieapp.data.network.ResponseHandler
+import com.akerimtay.movieapp.data.model.MovieType
+import com.akerimtay.movieapp.utils.performGetOperation
 
 class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource,
-    private val localDataSource: MovieLocalDataSource,
-    private val responseHandler: ResponseHandler
+    private val localDataSource: MovieLocalDataSource
 ) : MovieRepository {
 
-    override suspend fun getMovieDetails(movieId: Int): Resource<MovieFull> {
-        return try {
-            val response = remoteDataSource.getMovieDetails(movieId)
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
+    override fun getPopular() = performGetOperation(
+        databaseQuery = { localDataSource.getMovies(MovieType.POPULAR) },
+        networkCall = { remoteDataSource.getPopular() },
+        saveCallResult = { localDataSource.insertAll(it.movies, MovieType.POPULAR) }
+    )
 
-    override suspend fun getTopRated(): Resource<Movies> {
-        return try {
-            val response = remoteDataSource.getTopRated()
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
+    override fun getTopRated() = performGetOperation(
+        databaseQuery = { localDataSource.getMovies(MovieType.TOP_RATED) },
+        networkCall = { remoteDataSource.getTopRated() },
+        saveCallResult = { localDataSource.insertAll(it.movies, MovieType.TOP_RATED) }
+    )
 
-    override suspend fun getNowPlaying(): Resource<Movies> {
-        return try {
-            val response = remoteDataSource.getNowPlaying()
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
+    override fun getNowPlaying() = performGetOperation(
+        databaseQuery = { localDataSource.getMovies(MovieType.NOW_PLAYING) },
+        networkCall = { remoteDataSource.getNowPlaying() },
+        saveCallResult = { localDataSource.insertAll(it.movies, MovieType.NOW_PLAYING) }
+    )
 
-    override suspend fun getPopular(): Resource<Movies> {
-        return try {
-            val response = remoteDataSource.getPopular()
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
+    override suspend fun getMovieDetails(movieId: Int) = remoteDataSource.getMovieDetails(movieId)
 
-    override suspend fun getSimilar(movieId: Int): Resource<Movies> {
-        return try {
-            val response = remoteDataSource.getSimilar(movieId)
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
+    override suspend fun getSimilar(movieId: Int) = remoteDataSource.getSimilar(movieId)
 
 }

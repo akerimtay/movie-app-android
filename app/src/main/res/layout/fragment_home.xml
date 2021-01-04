@@ -86,7 +86,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white_100"
                     android:textSize="16sp"
-                    android:visibility="@{viewModel.popularMovies.data.movies.size() > 0}"
+                    android:visibility="@{viewModel.popularMovies.data.size() > 0}"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -127,7 +127,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white_100"
                     android:textSize="16sp"
-                    android:visibility="@{viewModel.topRatedMovies.data.movies.size() > 0}"
+                    android:visibility="@{viewModel.topRatedMovies.data.size() > 0}"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -168,7 +168,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/white_100"
                     android:textSize="16sp"
-                    android:visibility="@{viewModel.nowPlayingMovies.data.movies.size() > 0}"
+                    android:visibility="@{viewModel.nowPlayingMovies.data.size() > 0}"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView

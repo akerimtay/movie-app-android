@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
                 }
                 Resource.Status.SUCCESS -> {
                     binding.progressTopRated.isVisible = false
-                    resource.data?.movies?.let { topRatedMoviesAdapter.setItems(it) }
+                    resource.data?.let { topRatedMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
                     binding.progressTopRated.isVisible = false
@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
                 }
                 Resource.Status.SUCCESS -> {
                     binding.progressNowPlaying.isVisible = false
-                    resource.data?.movies?.let { nowPlayingMoviesAdapter.setItems(it) }
+                    resource.data?.let { nowPlayingMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
                     binding.progressNowPlaying.isVisible = false
@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
                 }
                 Resource.Status.SUCCESS -> {
                     binding.progressPopular.isVisible = false
-                    resource.data?.movies?.let { popularMoviesAdapter.setItems(it) }
+                    resource.data?.let { popularMoviesAdapter.setItems(it) }
                 }
                 Resource.Status.ERROR -> {
                     binding.progressPopular.isVisible = false
