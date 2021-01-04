@@ -3,7 +3,7 @@ package com.akerimtay.movieapp.data.repository
 import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.model.Credits
 import com.akerimtay.movieapp.data.network.ResponseHandler
-import com.akerimtay.movieapp.data.network.datasource.CreditRemoteDataSource
+import com.akerimtay.movieapp.data.datasource.CreditRemoteDataSource
 
 class CreditRepositoryImpl(
     private val remoteDataSource: CreditRemoteDataSource,

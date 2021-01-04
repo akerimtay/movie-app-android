@@ -1,13 +1,15 @@
 package com.akerimtay.movieapp.data.repository
 
 import com.akerimtay.movieapp.data.Resource
+import com.akerimtay.movieapp.data.datasource.MovieLocalDataSource
+import com.akerimtay.movieapp.data.datasource.MovieRemoteDataSource
 import com.akerimtay.movieapp.data.model.MovieFull
 import com.akerimtay.movieapp.data.model.Movies
 import com.akerimtay.movieapp.data.network.ResponseHandler
-import com.akerimtay.movieapp.data.network.datasource.MovieRemoteDataSource
 
 class MovieRepositoryImpl(
     private val remoteDataSource: MovieRemoteDataSource,
+    private val localDataSource: MovieLocalDataSource,
     private val responseHandler: ResponseHandler
 ) : MovieRepository {
 
