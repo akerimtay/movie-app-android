@@ -11,7 +11,7 @@ data class CategoryWithMovies(val category: Category, val movies: List<Movie>) :
 
     constructor(categoryWithMovies: CategoryWithMoviesEntity) : this(
         Category(categoryWithMovies.category),
-        categoryWithMovies.movies.map { Movie(it) }
+        categoryWithMovies.movies.map { Movie(it) }.sortedByDescending { it.voteAverage }
     )
 
     fun getCategoryName(context: Context): String {
