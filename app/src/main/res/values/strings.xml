@@ -17,4 +17,6 @@
     <string name="release_date">Год выпуска</string>
     <string name="similar">Похожие</string>
     <string name="on_dev">Разработчики работают над этим</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="empty_state">Ничего не найдено</string>
 </resources>

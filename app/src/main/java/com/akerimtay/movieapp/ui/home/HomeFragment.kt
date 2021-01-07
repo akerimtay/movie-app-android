@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -12,13 +13,15 @@ import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.local.SharedPrefsManager
 import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.databinding.FragmentHomeBinding
+import com.akerimtay.movieapp.extensions.dpToPx
+import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModel()
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var moviesAdapter: CategoryWithMoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +37,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkIsInitializedDatabase()
+        setupRecyclerView()
         observeViewModel()
     }
 
@@ -46,17 +50,31 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.categoryWithMovies.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Resource.Status.LOADING -> {
+    private fun setupRecyclerView() {
+        moviesAdapter = CategoryWithMoviesAdapter { openMovieDetailsPage(it) }
+        val spacing = requireContext().dpToPx(24)
+        val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.VERTICAL)
+        binding.moviesRecycler.apply {
+            adapter = moviesAdapter
+            addItemDecoration(itemDecoration)
+        }
+    }
 
+    private fun observeViewModel() {
+        viewModel.categoryWithMovies.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+                    binding.progressBar.isVisible = true
                 }
                 Resource.Status.SUCCESS -> {
-
+                    binding.progressBar.isVisible = false
+                    resource.data?.let {
+                        moviesAdapter.setItems(it)
+                        binding.txtEmpty.isVisible = it.isEmpty()
+                    }
                 }
                 Resource.Status.ERROR -> {
-                    Timber.e(it.message)
+                    binding.progressBar.isVisible = false
                 }
             }
         }
