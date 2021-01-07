@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.akerimtay.movieapp.data.model.Movie
-import com.akerimtay.movieapp.data.model.MovieType
 import java.util.*
 
 @Entity(tableName = "movies")
@@ -21,12 +20,13 @@ data class MovieEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "video") val video: Boolean,
     @ColumnInfo(name = "vote_average") val voteAverage: Double,
-    @ColumnInfo(name = "vote_count") val voteCount: Int,
-    @ColumnInfo(name = "type") val type: MovieType
+    @ColumnInfo(name = "vote_count") val voteCount: Int
 ) {
-    constructor(movie: Movie, type: MovieType) : this(
+
+    constructor(movie: Movie) : this(
         movie.id, movie.isAdult, movie.backdropPath, movie.originalLanguage,
         movie.originalTitle, movie.overview, movie.popularity, movie.posterPath, movie.releaseDate,
-        movie.title, movie.video, movie.voteAverage, movie.voteCount, type
+        movie.title, movie.video, movie.voteAverage, movie.voteCount
     )
+
 }

@@ -6,11 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.akerimtay.movieapp.data.local.dao.MovieDao
+import com.akerimtay.movieapp.data.local.entity.CategoryAndMovieEntity
+import com.akerimtay.movieapp.data.local.entity.CategoryEntity
 import com.akerimtay.movieapp.data.local.entity.MovieEntity
 import com.akerimtay.movieapp.data.local.mapping.DateConverter
 import com.akerimtay.movieapp.data.local.mapping.MovieTypeConverter
 
-@Database(entities = [MovieEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [(MovieEntity::class), (CategoryEntity::class), (CategoryAndMovieEntity::class)],
+    version = 1,
+    exportSchema = false
+)
 @TypeConverters(value = [(DateConverter::class), (MovieTypeConverter::class)])
 abstract class AppDatabase : RoomDatabase() {
 
@@ -30,6 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(appContext: Context) =
             Room.databaseBuilder(appContext, AppDatabase::class.java, "movie_app_db")
                 .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigrationOnDowngrade()
                 .build()
     }
 

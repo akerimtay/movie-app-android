@@ -1,8 +1,7 @@
 package com.akerimtay.movieapp.data.datasource
 
 import com.akerimtay.movieapp.data.Resource
-import com.akerimtay.movieapp.data.model.MovieFull
-import com.akerimtay.movieapp.data.model.Movies
+import com.akerimtay.movieapp.data.model.*
 import com.akerimtay.movieapp.data.network.ResponseHandler
 import com.akerimtay.movieapp.data.network.api.MovieApi
 
@@ -11,27 +10,26 @@ class MovieRemoteDataSource(
     private val responseHandler: ResponseHandler
 ) {
 
-    suspend fun getPopular(): Resource<Movies> {
+    suspend fun getCategoryWithMovies(): Resource<List<CategoryWithMovies>> {
         return try {
-            val response = movieApi.getPopular()
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
+            val popular = movieApi.getPopular()
+            val topRated = movieApi.getTopRated()
+            val nowPlaying = movieApi.getNowPlaying()
 
-    suspend fun getTopRated(): Resource<Movies> {
-        return try {
-            val response = movieApi.getTopRated()
-            return responseHandler.handleSuccess(response)
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
-
-    suspend fun getNowPlaying(): Resource<Movies> {
-        return try {
-            val response = movieApi.getNowPlaying()
+            val response = listOf(
+                CategoryWithMovies(
+                    Category(MovieType.POPULAR.id, MovieType.POPULAR.name),
+                    popular.movies
+                ),
+                CategoryWithMovies(
+                    Category(MovieType.TOP_RATED.id, MovieType.TOP_RATED.name),
+                    topRated.movies
+                ),
+                CategoryWithMovies(
+                    Category(MovieType.NOW_PLAYING.id, MovieType.NOW_PLAYING.name),
+                    nowPlaying.movies
+                )
+            )
             return responseHandler.handleSuccess(response)
         } catch (e: Exception) {
             responseHandler.handleException(e)

@@ -2,7 +2,7 @@ package com.akerimtay.movieapp.data.repository
 
 import com.akerimtay.movieapp.data.datasource.MovieLocalDataSource
 import com.akerimtay.movieapp.data.datasource.MovieRemoteDataSource
-import com.akerimtay.movieapp.data.model.MovieType
+import com.akerimtay.movieapp.data.model.Category
 import com.akerimtay.movieapp.utils.performGetOperation
 
 class MovieRepositoryImpl(
@@ -10,22 +10,13 @@ class MovieRepositoryImpl(
     private val localDataSource: MovieLocalDataSource
 ) : MovieRepository {
 
-    override fun getPopular() = performGetOperation(
-        databaseQuery = { localDataSource.getMovies(MovieType.POPULAR) },
-        networkCall = { remoteDataSource.getPopular() },
-        saveCallResult = { localDataSource.insertAll(it.movies, MovieType.POPULAR) }
-    )
+    override suspend fun insertCategories(categories: List<Category>) =
+        localDataSource.insertCategories(categories)
 
-    override fun getTopRated() = performGetOperation(
-        databaseQuery = { localDataSource.getMovies(MovieType.TOP_RATED) },
-        networkCall = { remoteDataSource.getTopRated() },
-        saveCallResult = { localDataSource.insertAll(it.movies, MovieType.TOP_RATED) }
-    )
-
-    override fun getNowPlaying() = performGetOperation(
-        databaseQuery = { localDataSource.getMovies(MovieType.NOW_PLAYING) },
-        networkCall = { remoteDataSource.getNowPlaying() },
-        saveCallResult = { localDataSource.insertAll(it.movies, MovieType.NOW_PLAYING) }
+    override fun getCategoryWithMovies() = performGetOperation(
+        databaseQuery = { localDataSource.getCategoryWithMovies() },
+        networkCall = { remoteDataSource.getCategoryWithMovies() },
+        saveCallResult = { localDataSource.insertCategoriesWithMovies(it) }
     )
 
     override suspend fun getMovieDetails(movieId: Int) = remoteDataSource.getMovieDetails(movieId)

@@ -1,10 +1,10 @@
 package com.akerimtay.movieapp.data.model
 
-enum class MovieType(val type: String) {
-    POPULAR("POPULAR"),
-    TOP_RATED("TOP_RATED"),
-    NOW_PLAYING("NOW_PLAYING"),
-    UNKNOWN("UNKNOWN");
+enum class MovieType(val id: Int, val type: String) {
+    POPULAR(1, "POPULAR"),
+    TOP_RATED(2, "TOP_RATED"),
+    NOW_PLAYING(3, "NOW_PLAYING"),
+    UNKNOWN(0, "UNKNOWN");
 
     companion object {
         private val map = values().associateBy(MovieType::type)
