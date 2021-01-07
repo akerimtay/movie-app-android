@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
+import com.akerimtay.movieapp.data.local.SharedPrefsManager
 import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,7 +33,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkIsInitializedDatabase()
         observeViewModel()
+    }
+
+    private fun checkIsInitializedDatabase() {
+        with(SharedPrefsManager) {
+            if (!isDataInitialized()) {
+                viewModel.initCategories()
+                setDataInitialized(true)
+            }
+        }
     }
 
     private fun observeViewModel() {
