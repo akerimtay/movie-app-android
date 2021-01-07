@@ -41,9 +41,7 @@ class SpaceItemDecoration(
                 outRect.right = if (position == itemCount - 1) spacing else 0
             }
             VERTICAL -> {
-                outRect.left = spacing
-                outRect.right = spacing
-                outRect.top = spacing
+                outRect.top = if (position == 0) 0 else spacing
                 outRect.bottom = if (position == itemCount - 1) spacing else 0
             }
             GRID -> if (layoutManager is GridLayoutManager) {

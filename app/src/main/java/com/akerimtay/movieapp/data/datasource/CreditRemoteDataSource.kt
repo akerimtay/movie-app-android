@@ -1,4 +1,4 @@
-package com.akerimtay.movieapp.data.network.datasource
+package com.akerimtay.movieapp.data.datasource
 
 import com.akerimtay.movieapp.data.network.api.CreditApi
 

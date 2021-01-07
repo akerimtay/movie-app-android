@@ -1,7 +1,8 @@
 package com.akerimtay.movieapp.di
 
-import com.akerimtay.movieapp.data.network.datasource.CreditRemoteDataSource
-import com.akerimtay.movieapp.data.network.datasource.MovieRemoteDataSource
+import com.akerimtay.movieapp.data.datasource.CreditRemoteDataSource
+import com.akerimtay.movieapp.data.datasource.MovieLocalDataSource
+import com.akerimtay.movieapp.data.datasource.MovieRemoteDataSource
 import com.akerimtay.movieapp.data.repository.CreditRepository
 import com.akerimtay.movieapp.data.repository.CreditRepositoryImpl
 import com.akerimtay.movieapp.data.repository.MovieRepository
@@ -14,6 +15,7 @@ val repositoryModule = module {
 }
 
 val dataSourceModule = module {
-    single { MovieRemoteDataSource(get()) }
+    single { MovieRemoteDataSource(get(), get()) }
+    single { MovieLocalDataSource(get()) }
     single { CreditRemoteDataSource(get()) }
 }

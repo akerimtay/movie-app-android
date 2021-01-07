@@ -91,107 +91,113 @@
                 android:id="@+id/credit_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginTop="@dimen/large_margin"
                 android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_credit"
                 tools:paddingStart="16dp" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/large_margin"
-                android:layout_marginTop="@dimen/common_margin"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/large_margin">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txt_studio_title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingEnd="@dimen/large_margin"
-                    tools:ignore="RtlSymmetry">
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/studio"
+                    android:textColor="@color/white_100"
+                    android:textSize="@dimen/medium_text_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".35" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/studio"
-                        android:textColor="@color/white_100"
-                        android:textSize="@dimen/medium_text_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/genres"
-                        android:textColor="@color/white_100"
-                        android:textSize="@dimen/medium_text_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/release_date"
-                        android:textColor="@color/white_100"
-                        android:textSize="@dimen/medium_text_size" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/txt_genres_title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/genres"
+                    android:textColor="@color/white_100"
+                    android:textSize="@dimen/medium_text_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_studio"
+                    app:layout_constraintWidth_percent=".35" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:alpha=".7"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/open_sans"
-                        android:lines="1"
-                        android:text="@{viewModel.movie.data.companiesString}"
-                        android:textColor="@color/white_100"
-                        android:textSize="@dimen/medium_text_size"
-                        tools:text="@tools:sample/lorem" />
+                <TextView
+                    android:id="@+id/txt_release_date_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/release_date"
+                    android:textColor="@color/white_100"
+                    android:textSize="@dimen/medium_text_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_genres"
+                    app:layout_constraintWidth_percent=".35" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:alpha=".7"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/open_sans"
-                        android:lines="1"
-                        android:text="@{viewModel.movie.data.genresString}"
-                        android:textColor="@color/white_100"
-                        android:textSize="@dimen/medium_text_size"
-                        tools:text="@tools:sample/lorem" />
+                <TextView
+                    android:id="@+id/txt_studio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:alpha=".7"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:maxLines="5"
+                    android:text="@{viewModel.movie.data.companiesString}"
+                    android:textColor="@color/white_100"
+                    android:textSize="@dimen/medium_text_size"
+                    app:layout_constraintLeft_toRightOf="@id/txt_studio_title"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/lorem/random" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/small_margin"
-                        android:alpha=".7"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/open_sans"
-                        android:lines="1"
-                        android:text="@{viewModel.movie.data.releaseDateString}"
-                        android:textColor="@color/white_100"
-                        android:textSize="@dimen/medium_text_size"
-                        tools:text="@tools:sample/date/ddmmyy" />
+                <TextView
+                    android:id="@+id/txt_genres"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:alpha=".7"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:maxLines="5"
+                    android:text="@{viewModel.movie.data.genresString}"
+                    android:textColor="@color/white_100"
+                    android:textSize="@dimen/medium_text_size"
+                    app:layout_constraintLeft_toRightOf="@id/txt_genres_title"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/txt_genres_title"
+                    tools:text="@tools:sample/lorem/random" />
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_release_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:alpha=".7"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:lines="1"
+                    android:text="@{viewModel.movie.data.releaseDateString}"
+                    android:textColor="@color/white_100"
+                    android:textSize="@dimen/medium_text_size"
+                    app:layout_constraintLeft_toRightOf="@id/txt_release_date_title"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/txt_release_date_title"
+                    tools:text="@tools:sample/date/ddmmyy" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/view_similar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_margin"
+                android:layout_marginTop="@dimen/large_margin"
                 android:orientation="vertical"
                 android:visibility="@{viewModel.similarMovies.data.movies.size() > 0}">
 
@@ -210,6 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_margin"
                     android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_movie"
