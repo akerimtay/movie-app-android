@@ -14,10 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import androidx.transition.TransitionInflater
 import com.akerimtay.movieapp.R
+import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.databinding.FragmentSearchBinding
 import com.akerimtay.movieapp.extensions.showToast
 import com.akerimtay.movieapp.utils.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.util.*
 
 class SearchFragment : Fragment() {
@@ -25,6 +27,8 @@ class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModel()
 
     private lateinit var binding: FragmentSearchBinding
+
+    private var isSwipeRefreshEnabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +50,41 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        observeViewModel()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            CODE_VOICE_RECOGNIZER -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val voiceQuery = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    binding.searchView.setQuery(voiceQuery?.firstOrNull(), true)
+                }
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.movies.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+                    binding.swipeLayout.isRefreshing = true
+                }
+                Resource.Status.SUCCESS -> {
+                    binding.swipeLayout.isRefreshing = false
+                    resource.data?.forEach { Timber.d(it.title) }
+                }
+                Resource.Status.ERROR -> {
+                    binding.swipeLayout.isRefreshing = false
+                    Timber.e(resource.message)
+                }
+            }
+        }
     }
 
     private fun setupUI() {
+        binding.swipeLayout.isEnabled = isSwipeRefreshEnabled
         binding.arrowBack.setOnClickListener { requireActivity().onBackPressed() }
         binding.imgVoiceSearch.setOnClickListener { openVoice() }
         setupSearchView()
@@ -57,11 +93,10 @@ class SearchFragment : Fragment() {
     private fun setupSearchView() {
         binding.searchView.onActionViewExpanded()
 
-        val debounceTextChange =
-            debounce(DELAY_TIME_MILLIS, viewModel.viewModelScope, viewModel::search)
+        val onTextChange = debounce(DELAY_TIME_MILLIS, viewModel.viewModelScope, viewModel::search)
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String?): Boolean {
-                query.let(debounceTextChange)
+                query.let(onTextChange)
                 return true
             }
 
@@ -86,18 +121,6 @@ class SearchFragment : Fragment() {
             startActivityForResult(voiceIntent, CODE_VOICE_RECOGNIZER)
         } catch (e: Exception) {
             showToast(e.localizedMessage)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            CODE_VOICE_RECOGNIZER -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    val voiceQuery = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    binding.searchView.setQuery(voiceQuery?.firstOrNull(), true)
-                }
-            }
         }
     }
 

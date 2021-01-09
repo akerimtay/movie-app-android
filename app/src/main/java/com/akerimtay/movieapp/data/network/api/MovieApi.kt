@@ -4,6 +4,7 @@ import com.akerimtay.movieapp.data.model.MovieFull
 import com.akerimtay.movieapp.data.model.Movies
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieApi {
 
@@ -21,4 +22,11 @@ interface MovieApi {
 
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilar(@Path("movie_id") movieId: Int): Movies
+
+    @GET("search/movie")
+    suspend fun search(
+        @Query("query") query: String,
+        @Query("page") page: Int
+    ): Movies
+
 }

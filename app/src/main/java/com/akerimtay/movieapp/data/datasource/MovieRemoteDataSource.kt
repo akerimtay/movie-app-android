@@ -54,4 +54,13 @@ class MovieRemoteDataSource(
         }
     }
 
+    suspend fun search(query: String, page: Int): Resource<List<Movie>> {
+        return try {
+            val response = movieApi.search(query, page)
+            return responseHandler.handleSuccess(response.movies)
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
 }

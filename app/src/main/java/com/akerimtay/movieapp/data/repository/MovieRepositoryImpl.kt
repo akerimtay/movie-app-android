@@ -23,4 +23,6 @@ class MovieRepositoryImpl(
 
     override suspend fun getSimilar(movieId: Int) = remoteDataSource.getSimilar(movieId)
 
+    override suspend fun search(query: String, page: Int) = remoteDataSource.search(query, page)
+
 }
