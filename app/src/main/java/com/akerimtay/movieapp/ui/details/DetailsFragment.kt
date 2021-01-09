@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
@@ -31,6 +30,8 @@ class DetailsFragment : Fragment() {
     private lateinit var creditsAdapter: CreditsAdapter
     private lateinit var similarAdapter: MoviesAdapter
 
+    private var isSwipeRefreshEnabled = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val movieId = navArgs.movieId
@@ -51,7 +52,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViews()
-        observeViews()
+        setupUI()
         observeViewModel()
     }
 
@@ -77,22 +78,23 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun observeViews() {
-        binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+    private fun setupUI() {
+        binding.toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+        binding.contentDetails.swipeLayout.isEnabled = isSwipeRefreshEnabled
     }
 
     private fun observeViewModel() {
         viewModel.movie.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-                    binding.progressView.isVisible = true
+                    binding.contentDetails.swipeLayout.isRefreshing = true
                 }
                 Resource.Status.SUCCESS -> {
-                    binding.progressView.isVisible = false
+                    binding.contentDetails.swipeLayout.isRefreshing = false
                     resource.data?.let { initMovie(it) }
                 }
                 Resource.Status.ERROR -> {
-                    binding.progressView.isVisible = false
+                    binding.contentDetails.swipeLayout.isRefreshing = false
                     showToast(resource.message)
                 }
             }
