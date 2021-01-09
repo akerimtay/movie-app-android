@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
@@ -36,9 +37,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViews()
         checkIsInitializedDatabase()
         setupRecyclerView()
         observeViewModel()
+    }
+
+    private fun observeViews() {
+        binding.etSearch.setOnClickListener { openSearchPage() }
     }
 
     private fun checkIsInitializedDatabase() {
@@ -78,6 +84,12 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openSearchPage() {
+        val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+        val extras = FragmentNavigatorExtras(binding.etSearch to "search_view")
+        findNavController().navigate(action, extras)
     }
 
     private fun openMovieDetailsPage(movie: Movie) {

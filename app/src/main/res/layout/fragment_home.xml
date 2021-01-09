@@ -58,6 +58,7 @@
                     android:inputType="textAutoComplete|textCapSentences"
                     android:padding="@dimen/small_margin"
                     android:textColorHint="@color/white_60"
+                    android:transitionName="et_search"
                     app:layout_constraintBottom_toTopOf="@id/view_round"
                     app:layout_constraintTop_toBottomOf="@id/txt_hello" />
 

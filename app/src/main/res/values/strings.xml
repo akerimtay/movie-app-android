@@ -19,4 +19,5 @@
     <string name="on_dev">Разработчики работают над этим</string>
     <string name="unknown">Неизвестно</string>
     <string name="empty_state">Ничего не найдено</string>
+    <string name="search_movie">Введите название фильма</string>
 </resources>
