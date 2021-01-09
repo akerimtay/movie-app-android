@@ -20,4 +20,5 @@
     <string name="unknown">Неизвестно</string>
     <string name="empty_state">Ничего не найдено</string>
     <string name="search_movie">Введите название фильма</string>
+    <string name="say_movie_name">Произнесите название фильма</string>
 </resources>

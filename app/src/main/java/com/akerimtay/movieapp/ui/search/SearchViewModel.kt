@@ -7,4 +7,7 @@ class SearchViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
+    fun search(query: String?) {
+
+    }
 }
