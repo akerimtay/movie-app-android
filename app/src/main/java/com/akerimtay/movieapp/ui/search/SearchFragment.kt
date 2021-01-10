@@ -12,21 +12,26 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.akerimtay.movieapp.R
-import com.akerimtay.movieapp.data.Resource
+import com.akerimtay.movieapp.data.datasource.paging.NetworkState
+import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.databinding.FragmentSearchBinding
+import com.akerimtay.movieapp.extensions.dpToPx
+import com.akerimtay.movieapp.extensions.hideKeyboard
 import com.akerimtay.movieapp.extensions.showToast
+import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import com.akerimtay.movieapp.utils.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.util.*
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
 
     private val viewModel: SearchViewModel by viewModel()
 
     private lateinit var binding: FragmentSearchBinding
+    private lateinit var moviesAdapter: MoviePagedAdapter
 
     private var isSwipeRefreshEnabled = false
 
@@ -50,6 +55,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        setupRecyclerView()
         observeViewModel()
     }
 
@@ -65,22 +71,24 @@ class SearchFragment : Fragment() {
         }
     }
 
+    //////////////////// OnMovieClickListener ////////////////////
+    override fun whenListIsUpdated(size: Int, networkState: NetworkState?) {
+        binding.swipeLayout.isRefreshing = size == 0 && networkState == NetworkState.RUNNING
+    }
+
+    override fun onClickRetry() {
+        viewModel.refreshFailedRequest()
+    }
+
+    override fun onMovieClick(movie: Movie) {
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(movie.id)
+        findNavController().navigate(action)
+    }
+    ///////////////////////////// end ////////////////////////////
+
     private fun observeViewModel() {
-        viewModel.movies.observe(viewLifecycleOwner) { resource ->
-            when (resource.status) {
-                Resource.Status.LOADING -> {
-                    binding.swipeLayout.isRefreshing = true
-                }
-                Resource.Status.SUCCESS -> {
-                    binding.swipeLayout.isRefreshing = false
-                    resource.data?.forEach { Timber.d(it.title) }
-                }
-                Resource.Status.ERROR -> {
-                    binding.swipeLayout.isRefreshing = false
-                    Timber.e(resource.message)
-                }
-            }
-        }
+        viewModel.movies.observe(viewLifecycleOwner) { moviesAdapter.submitList(it) }
+        viewModel.networkState.observe(viewLifecycleOwner) { moviesAdapter.updateNetworkState(it) }
     }
 
     private fun setupUI() {
@@ -90,10 +98,22 @@ class SearchFragment : Fragment() {
         setupSearchView()
     }
 
+    private fun setupRecyclerView() {
+        val spacing = requireContext().dpToPx(24)
+        val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.VERTICAL)
+
+        moviesAdapter = MoviePagedAdapter(this)
+        binding.moviesRecycler.apply {
+            adapter = moviesAdapter
+            addItemDecoration(itemDecoration)
+        }
+    }
+
     private fun setupSearchView() {
         binding.searchView.onActionViewExpanded()
 
-        val onTextChange = debounce(DELAY_TIME_MILLIS, viewModel.viewModelScope, viewModel::search)
+        val scope = viewModel.viewModelScope
+        val onTextChange = debounce(DELAY_TIME_MILLIS, scope, viewModel::searchMovie)
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String?): Boolean {
                 query.let(onTextChange)
@@ -101,6 +121,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
+                hideKeyboard()
                 return true
             }
         })

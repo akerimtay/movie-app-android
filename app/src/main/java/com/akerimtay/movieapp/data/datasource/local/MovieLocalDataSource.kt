@@ -1,4 +1,4 @@
-package com.akerimtay.movieapp.data.datasource
+package com.akerimtay.movieapp.data.datasource.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations

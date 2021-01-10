@@ -1,7 +1,7 @@
 package com.akerimtay.movieapp.data.repository
 
-import com.akerimtay.movieapp.data.datasource.MovieLocalDataSource
-import com.akerimtay.movieapp.data.datasource.MovieRemoteDataSource
+import com.akerimtay.movieapp.data.datasource.local.MovieLocalDataSource
+import com.akerimtay.movieapp.data.datasource.remote.MovieRemoteDataSource
 import com.akerimtay.movieapp.data.model.Category
 import com.akerimtay.movieapp.utils.performGetOperation
 

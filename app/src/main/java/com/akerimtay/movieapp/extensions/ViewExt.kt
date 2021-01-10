@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 
 @BindingAdapter(value = ["loadW500Image", "placeholder"], requireAll = false)
 fun ImageView.loadW500Image(path: String?, placeholder: Drawable?) {
-    val url = BuildConfig.IMAGE_URL + "w500" + path
+    val url = path?.let { BuildConfig.IMAGE_URL + "w500" + path } ?: ""
     Glide.with(context)
         .load(url)
         .placeholder(placeholder)
@@ -20,7 +20,7 @@ fun ImageView.loadW500Image(path: String?, placeholder: Drawable?) {
 
 @BindingAdapter(value = ["loadW185Image", "placeholder"], requireAll = false)
 fun ImageView.loadW185Image(path: String?, placeholder: Drawable?) {
-    val url = BuildConfig.IMAGE_URL + "w185" + path
+    val url = path?.let { BuildConfig.IMAGE_URL + "w185" + path } ?: ""
     Glide.with(context)
         .load(url)
         .placeholder(placeholder)
@@ -32,7 +32,7 @@ fun ImageView.loadOriginalImage(
     placeholder: Drawable?,
     listener: (() -> Unit)? = null
 ) {
-    val url = BuildConfig.IMAGE_URL + "original" + path
+    val url = path?.let { BuildConfig.IMAGE_URL + "original" + path } ?: ""
     Glide.with(context)
         .load(url)
         .listener(RequestDrawableListenerAdapter(listener))

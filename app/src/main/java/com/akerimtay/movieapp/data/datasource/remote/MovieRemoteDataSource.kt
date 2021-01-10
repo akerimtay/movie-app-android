@@ -1,4 +1,4 @@
-package com.akerimtay.movieapp.data.datasource
+package com.akerimtay.movieapp.data.datasource.remote
 
 import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.model.*
