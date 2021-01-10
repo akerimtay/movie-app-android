@@ -37,6 +37,12 @@
         android:id="@+id/searchFragment"
         android:name="com.akerimtay.movieapp.ui.search.SearchFragment"
         android:label="@string/search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+
+        <action
+            android:id="@+id/action_searchFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+
+    </fragment>
 
 </navigation>
