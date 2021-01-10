@@ -1,8 +1,7 @@
-package com.akerimtay.movieapp.ui.main
+package com.akerimtay.movieapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.akerimtay.movieapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

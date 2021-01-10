@@ -64,6 +64,7 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.1.0"
     implementation "androidx.fragment:fragment-ktx:1.2.5"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Google
     implementation 'com.google.android.material:material:1.2.1'
@@ -108,8 +109,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
+    //////////////////////// UI ////////////////////////
+
     // Rounded Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //////////////////////// end ////////////////////////
 
     // Glide
     def glide_version = "4.11.0"
@@ -121,4 +126,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    // Paging Library
+    def paging_version = "2.1.2"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 }

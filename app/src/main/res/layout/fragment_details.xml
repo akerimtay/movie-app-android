@@ -73,10 +73,6 @@
             layout="@layout/content_details"
             app:viewModel="@{viewModel}" />
 
-        <include
-            android:id="@+id/progress_view"
-            layout="@layout/content_progress_view" />
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

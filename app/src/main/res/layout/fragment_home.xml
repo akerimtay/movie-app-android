@@ -12,6 +12,7 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -58,6 +59,7 @@
                     android:inputType="textAutoComplete|textCapSentences"
                     android:padding="@dimen/small_margin"
                     android:textColorHint="@color/white_60"
+                    android:transitionName="et_search"
                     app:layout_constraintBottom_toTopOf="@id/view_round"
                     app:layout_constraintTop_toBottomOf="@id/txt_hello" />
 

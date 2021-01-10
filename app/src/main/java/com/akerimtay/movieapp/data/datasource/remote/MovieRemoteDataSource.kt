@@ -1,4 +1,4 @@
-package com.akerimtay.movieapp.data.datasource
+package com.akerimtay.movieapp.data.datasource.remote
 
 import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.model.*
@@ -49,6 +49,15 @@ class MovieRemoteDataSource(
         return try {
             val response = movieApi.getSimilar(movieId)
             return responseHandler.handleSuccess(response)
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    suspend fun search(query: String, page: Int): Resource<List<Movie>> {
+        return try {
+            val response = movieApi.search(query, page)
+            return responseHandler.handleSuccess(response.movies)
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

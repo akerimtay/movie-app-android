@@ -69,11 +69,6 @@ data class MovieFull(
         return sb.toString()
     }
 
-    fun getReleaseDateString(): String {
-        val calendar = Calendar.getInstance()
-        calendar.time = releaseDate
-        return calendar.get(Calendar.YEAR).toString()
-    }
 }
 
 @Parcelize

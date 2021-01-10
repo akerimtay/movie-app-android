@@ -31,6 +31,8 @@ class DetailsFragment : Fragment() {
     private lateinit var creditsAdapter: CreditsAdapter
     private lateinit var similarAdapter: MoviesAdapter
 
+    private var isSwipeRefreshEnabled = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val movieId = navArgs.movieId
@@ -51,7 +53,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViews()
-        observeViews()
+        setupUI()
         observeViewModel()
     }
 
@@ -77,22 +79,23 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun observeViews() {
+    private fun setupUI() {
         binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+        binding.contentDetails.swipeLayout.isEnabled = isSwipeRefreshEnabled
     }
 
     private fun observeViewModel() {
         viewModel.movie.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-                    binding.progressView.isVisible = true
+                    binding.contentDetails.swipeLayout.isRefreshing = true
                 }
                 Resource.Status.SUCCESS -> {
-                    binding.progressView.isVisible = false
+                    binding.contentDetails.swipeLayout.isRefreshing = false
                     resource.data?.let { initMovie(it) }
                 }
                 Resource.Status.ERROR -> {
-                    binding.progressView.isVisible = false
+                    binding.contentDetails.swipeLayout.isRefreshing = false
                     showToast(resource.message)
                 }
             }
