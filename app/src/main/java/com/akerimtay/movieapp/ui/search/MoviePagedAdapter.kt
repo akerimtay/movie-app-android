@@ -12,7 +12,7 @@ import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.databinding.ItemMovieLongBinding
 import com.akerimtay.movieapp.databinding.ItemNetworkStateBinding
 
-class MovieLongAdapter(
+class MoviePagedAdapter(
     private val onItemClickListener: OnMovieClickListener
 ) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieItemCallback()) {
 

@@ -26,12 +26,12 @@ import com.akerimtay.movieapp.utils.debounce
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-class SearchFragment : Fragment(), MovieLongAdapter.OnMovieClickListener {
+class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
 
     private val viewModel: SearchViewModel by viewModel()
 
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var moviesAdapter: MovieLongAdapter
+    private lateinit var moviesAdapter: MoviePagedAdapter
 
     private var isSwipeRefreshEnabled = false
 
@@ -102,7 +102,7 @@ class SearchFragment : Fragment(), MovieLongAdapter.OnMovieClickListener {
         val spacing = requireContext().dpToPx(24)
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.VERTICAL)
 
-        moviesAdapter = MovieLongAdapter(this)
+        moviesAdapter = MoviePagedAdapter(this)
         binding.moviesRecycler.apply {
             adapter = moviesAdapter
             addItemDecoration(itemDecoration)
