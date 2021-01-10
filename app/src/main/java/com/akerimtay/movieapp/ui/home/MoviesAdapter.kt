@@ -12,6 +12,7 @@ import com.akerimtay.movieapp.databinding.ItemMovieBinding
 class MoviesAdapter(
     private val onItemClickListener: (movie: Movie) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private val items = mutableListOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -43,12 +44,14 @@ class MoviesAdapter(
     }
 
     class MovieViewHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root)
+
 }
 
 class MovieCallback(
     private val oldItems: List<Movie>,
     private val newItems: List<Movie>
 ) : DiffUtil.Callback() {
+
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldItems[oldItemPosition].id == newItems[newItemPosition].id
     }
@@ -60,4 +63,5 @@ class MovieCallback(
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldItems[oldItemPosition] == newItems[newItemPosition]
     }
+
 }

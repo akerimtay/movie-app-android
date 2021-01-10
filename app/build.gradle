@@ -109,8 +109,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
+    //////////////////////// UI ////////////////////////
+
     // Rounded Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //////////////////////// end ////////////////////////
 
     // Glide
     def glide_version = "4.11.0"

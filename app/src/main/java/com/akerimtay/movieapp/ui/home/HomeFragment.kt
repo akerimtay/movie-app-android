@@ -15,6 +15,7 @@ import com.akerimtay.movieapp.data.local.SharedPrefsManager
 import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.databinding.FragmentHomeBinding
 import com.akerimtay.movieapp.extensions.dpToPx
+import com.akerimtay.movieapp.utils.ScrollStateHolder
 import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,6 +24,17 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var moviesAdapter: CategoryWithMoviesAdapter
+    private lateinit var scrollStateHolder: ScrollStateHolder
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        scrollStateHolder = ScrollStateHolder(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        scrollStateHolder.onSaveInstanceState(outState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +69,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        moviesAdapter = CategoryWithMoviesAdapter { openMovieDetailsPage(it) }
+        moviesAdapter = CategoryWithMoviesAdapter(scrollStateHolder) { openMovieDetailsPage(it) }
         val spacing = requireContext().dpToPx(24)
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.VERTICAL)
         binding.moviesRecycler.apply {
