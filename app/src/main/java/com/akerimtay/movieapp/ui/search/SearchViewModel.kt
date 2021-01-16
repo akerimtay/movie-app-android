@@ -13,7 +13,7 @@ import com.akerimtay.movieapp.utils.PAGING_ITEMS_SIZE
 import com.akerimtay.movieapp.utils.PAGING_PREFETCH_DISTANCE
 
 class SearchViewModel(
-    private val movieRepository: MovieRepository
+    movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val movieDataSource = MoviePageDataSourceFactory(
@@ -41,8 +41,6 @@ class SearchViewModel(
         .build()
 
     fun refreshFailedRequest() = movieDataSource.getSource()?.retryFailedQuery()
-
-    fun refreshAllList() = movieDataSource.getSource()?.refresh()
 
     fun getCurrentQuery() = movieDataSource.getQuery()
 

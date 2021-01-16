@@ -190,7 +190,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/open_sans"
                         android:lines="1"
-                        android:text="@{DateUtils.getYear(viewModel.movie.data.releaseDate)}"
+                        android:text="@{DateUtils.getDate(viewModel.movie.data.releaseDate)}"
                         android:textColor="@color/white_100"
                         android:textSize="@dimen/medium_text_size"
                         app:layout_constraintLeft_toRightOf="@id/txt_release_date_title"

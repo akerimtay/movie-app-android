@@ -6,7 +6,7 @@
     <dimen name="item_movie_width">140dp</dimen>
     <dimen name="item_movie_height">180dp</dimen>
 
-    <dimen name="item_movie_long_width">150dp</dimen>
+    <dimen name="item_movie_long_width">120dp</dimen>
     <dimen name="item_movie_long_height">140dp</dimen>
 
     <dimen name="app_bar_height">320dp</dimen>

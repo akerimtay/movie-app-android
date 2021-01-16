@@ -36,7 +36,10 @@ data class Movie(
     )
 
     fun getVote(): String {
-        return voteAverage.toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString()
+        return voteAverage.toBigDecimal()
+            .setScale(1, RoundingMode.UP)
+            .toDouble()
+            .toString()
     }
 
 }

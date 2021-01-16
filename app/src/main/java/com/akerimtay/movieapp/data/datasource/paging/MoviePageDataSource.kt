@@ -21,10 +21,7 @@ class MoviePageDataSource(
     private val networkState = MutableLiveData<NetworkState>()
     private var retryQuery: (() -> Any)? = null
 
-    override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, Movie>
-    ) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
         retryQuery = { loadInitial(params, callback) }
         executeQuery(PAGING_DEFAULT_PAGE) { list ->
             callback.onResult(list, null, PAGING_DEFAULT_NEXT_PAGE)
@@ -50,11 +47,11 @@ class MoviePageDataSource(
         networkState.postValue(NetworkState.RUNNING)
         scope.launch(getJobErrorHandler() + supervisorJob) {
             val response = movieRepository.search(query, page)
-            retryQuery = null
             if (response.status == Resource.Status.SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 val movies = response.data ?: listOf()
                 callback(movies)
+                retryQuery = null
             } else {
                 networkState.postValue(NetworkState.FAILED)
             }

@@ -39,11 +39,7 @@ class DetailsFragment : Fragment() {
         viewModel.setMovieId(movieId)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
@@ -37,15 +38,10 @@ class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -74,6 +70,21 @@ class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
     //////////////////// OnMovieClickListener ////////////////////
     override fun whenListIsUpdated(size: Int, networkState: NetworkState?) {
         binding.swipeLayout.isRefreshing = size == 0 && networkState == NetworkState.RUNNING
+        binding.viewEmpty.isVisible = size == 0
+        if (size == 0) {
+            when (networkState) {
+                NetworkState.SUCCESS -> {
+                    binding.txtEmpty.text = getString(R.string.search_empty_format, viewModel.getCurrentQuery())
+                    binding.imgEmpty.setBackgroundResource(R.drawable.ic_baseline_search_48_white)
+                }
+                NetworkState.FAILED -> {
+                    binding.txtEmpty.text = getString(R.string.something_went_wrong)
+                    binding.imgEmpty.setBackgroundResource(R.drawable.ic_twotone_healing_48_white)
+                }
+                else -> {
+                }
+            }
+        }
     }
 
     override fun onClickRetry() {
