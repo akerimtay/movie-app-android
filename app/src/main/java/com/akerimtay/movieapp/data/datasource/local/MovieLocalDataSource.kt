@@ -16,7 +16,7 @@ class MovieLocalDataSource(private val movieDao: MovieDao) {
     fun getCategoryWithMovies(): LiveData<List<CategoryWithMovies>> {
         val data = movieDao.getCategoryWithMovies()
         return Transformations.map(data) { categoryWithMovies ->
-            categoryWithMovies.map { CategoryWithMovies(it) }
+            categoryWithMovies.map { CategoryWithMovies(it) }.filter { it.movies.isNotEmpty() }
         }
     }
 

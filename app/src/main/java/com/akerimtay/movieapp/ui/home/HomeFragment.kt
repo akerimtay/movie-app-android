@@ -78,17 +78,16 @@ class HomeFragment : Fragment() {
         viewModel.categoryWithMovies.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-                    binding.progressBar.isVisible = true
+                    updateShimmer(isLoading = true)
                 }
                 Resource.Status.SUCCESS -> {
-                    binding.progressBar.isVisible = false
                     resource.data?.let {
                         moviesAdapter.setItems(it)
-                        binding.txtEmpty.isVisible = it.isEmpty()
+                        updateShimmer(isLoading = it.isEmpty())
                     }
                 }
                 Resource.Status.ERROR -> {
-                    binding.progressBar.isVisible = false
+                    updateShimmer(isLoading = false)
                 }
             }
         }
@@ -103,5 +102,16 @@ class HomeFragment : Fragment() {
     private fun openMovieDetailsPage(movie: Movie) {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(movie.id)
         findNavController().navigate(action)
+    }
+
+    private fun updateShimmer(isLoading: Boolean) {
+        with(binding) {
+            shimmerLayout.isVisible = isLoading
+            if (isLoading) {
+                shimmerLayout.startShimmer()
+            } else {
+                shimmerLayout.stopShimmer()
+            }
+        }
     }
 }

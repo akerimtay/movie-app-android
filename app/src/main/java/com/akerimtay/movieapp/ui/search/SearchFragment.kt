@@ -69,19 +69,21 @@ class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
 
     //////////////////// OnMovieClickListener ////////////////////
     override fun whenListIsUpdated(size: Int, networkState: NetworkState?) {
-        binding.swipeLayout.isRefreshing = size == 0 && networkState == NetworkState.RUNNING
-        binding.viewEmpty.isVisible = size == 0
-        if (size == 0) {
-            when (networkState) {
-                NetworkState.SUCCESS -> {
-                    binding.txtEmpty.text = getString(R.string.search_empty_format, viewModel.getCurrentQuery())
-                    binding.imgEmpty.setBackgroundResource(R.drawable.ic_baseline_search_48_white)
-                }
-                NetworkState.FAILED -> {
-                    binding.txtEmpty.text = getString(R.string.something_went_wrong)
-                    binding.imgEmpty.setBackgroundResource(R.drawable.ic_twotone_healing_48_white)
-                }
-                else -> {
+        with(binding.layoutSearch) {
+            swipeLayout.isRefreshing = size == 0 && networkState == NetworkState.RUNNING
+            viewEmpty.isVisible = size == 0
+            if (size == 0) {
+                when (networkState) {
+                    NetworkState.SUCCESS -> {
+                        txtEmpty.text = getString(R.string.search_empty_format, viewModel.getCurrentQuery())
+                        imgEmpty.setBackgroundResource(R.drawable.ic_baseline_search_48_white)
+                    }
+                    NetworkState.FAILED -> {
+                        txtEmpty.text = getString(R.string.something_went_wrong)
+                        imgEmpty.setBackgroundResource(R.drawable.ic_twotone_healing_48_white)
+                    }
+                    else -> {
+                    }
                 }
             }
         }
@@ -103,9 +105,11 @@ class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
     }
 
     private fun setupUI() {
-        binding.swipeLayout.isEnabled = isSwipeRefreshEnabled
-        binding.arrowBack.setOnClickListener { requireActivity().onBackPressed() }
-        binding.imgVoiceSearch.setOnClickListener { openVoice() }
+        with(binding) {
+            layoutSearch.swipeLayout.isEnabled = isSwipeRefreshEnabled
+            arrowBack.setOnClickListener { requireActivity().onBackPressed() }
+            imgVoiceSearch.setOnClickListener { openVoice() }
+        }
         setupSearchView()
     }
 
@@ -114,7 +118,7 @@ class SearchFragment : Fragment(), MoviePagedAdapter.OnMovieClickListener {
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.VERTICAL)
 
         moviesAdapter = MoviePagedAdapter(this)
-        binding.moviesRecycler.apply {
+        with(binding.layoutSearch.moviesRecycler) {
             adapter = moviesAdapter
             addItemDecoration(itemDecoration)
         }
