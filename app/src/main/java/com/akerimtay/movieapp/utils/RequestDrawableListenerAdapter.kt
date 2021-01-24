@@ -7,7 +7,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
 class RequestDrawableListenerAdapter(
-    private val listener: (() -> Unit)? = null
+    private val onFailed: (() -> Unit)? = null,
+    private val onReady: (() -> Unit)? = null
 ) : RequestListener<Drawable> {
 
     override fun onLoadFailed(
@@ -16,7 +17,7 @@ class RequestDrawableListenerAdapter(
         target: Target<Drawable>?,
         isFirstResource: Boolean
     ): Boolean {
-        listener?.let { it() }
+        onFailed?.let { it() }
         return false
     }
 
@@ -27,7 +28,7 @@ class RequestDrawableListenerAdapter(
         dataSource: DataSource?,
         isFirstResource: Boolean
     ): Boolean {
-        listener?.let { it() }
+        onReady?.let { it() }
         return false
     }
 

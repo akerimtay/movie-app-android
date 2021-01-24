@@ -29,14 +29,13 @@ fun ImageView.loadW185Image(path: String?, placeholder: Drawable?) {
 
 fun ImageView.loadOriginalImage(
     path: String?,
-    placeholder: Drawable?,
-    listener: (() -> Unit)? = null
+    onFailed: (() -> Unit)? = null,
+    onReady: (() -> Unit)? = null
 ) {
     val url = path?.let { BuildConfig.IMAGE_URL + "original" + path } ?: ""
     Glide.with(context)
         .load(url)
-        .listener(RequestDrawableListenerAdapter(listener))
-        .placeholder(placeholder)
+        .listener(RequestDrawableListenerAdapter(onFailed, onReady))
         .into(this)
 }
 

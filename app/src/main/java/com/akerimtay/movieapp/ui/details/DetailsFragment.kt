@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -30,8 +29,6 @@ class DetailsFragment : Fragment() {
 
     private lateinit var creditsAdapter: CreditsAdapter
     private lateinit var similarAdapter: MoviesAdapter
-
-    private var isSwipeRefreshEnabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,22 +73,24 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupUI() {
-        binding.toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
-        binding.contentDetails.swipeLayout.isEnabled = isSwipeRefreshEnabled
+        with(binding) {
+            updateBannerShimmer(isLoading = true)
+            toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+        }
     }
 
     private fun observeViewModel() {
         viewModel.movie.observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.LOADING -> {
-                    binding.contentDetails.swipeLayout.isRefreshing = true
+                    updateContentShimmer(isLoading = true)
                 }
                 Resource.Status.SUCCESS -> {
-                    binding.contentDetails.swipeLayout.isRefreshing = false
                     resource.data?.let { initMovie(it) }
+                    updateContentShimmer(isLoading = false)
                 }
                 Resource.Status.ERROR -> {
-                    binding.contentDetails.swipeLayout.isRefreshing = false
+                    updateContentShimmer(isLoading = false)
                     showToast(resource.message)
                 }
             }
@@ -123,13 +122,43 @@ class DetailsFragment : Fragment() {
     }
 
     private fun initMovie(movie: MovieFull) {
-        val placeHolder = ContextCompat.getDrawable(requireContext(), R.drawable.placeholder_poster)
-        binding.imgBanner.loadOriginalImage(movie.backdropPath, placeHolder) {
-            binding.progressImage.isVisible = false
+        with(binding) {
+            contentDetails.layoutContent.isVisible = true
+
+            imgBanner.loadOriginalImage(
+                path = movie.backdropPath,
+                onFailed = {
+                    imgBanner.setBackgroundResource(R.drawable.placeholder_poster)
+                    updateBannerShimmer(isLoading = false)
+                },
+                onReady = { updateBannerShimmer(isLoading = false) }
+            )
         }
 
         binding.contentDetails.btnOfficialPage.setOnClickListener {
             startActivity(getBrowserIntent(movie.homepage))
+        }
+    }
+
+    private fun updateBannerShimmer(isLoading: Boolean) {
+        with(binding) {
+            bannerShimmerLayout.isVisible = isLoading
+            if (isLoading) {
+                bannerShimmerLayout.startShimmer()
+            } else {
+                bannerShimmerLayout.stopShimmer()
+            }
+        }
+    }
+
+    private fun updateContentShimmer(isLoading: Boolean) {
+        with(binding.contentDetails) {
+            contentShimmerLayout.isVisible = isLoading
+            if (isLoading) {
+                contentShimmerLayout.startShimmer()
+            } else {
+                contentShimmerLayout.stopShimmer()
+            }
         }
     }
 }
