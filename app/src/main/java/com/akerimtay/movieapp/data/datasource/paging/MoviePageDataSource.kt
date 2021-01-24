@@ -6,10 +6,11 @@ import androidx.paging.PageKeyedDataSource
 import com.akerimtay.movieapp.data.Resource
 import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.data.repository.MovieRepository
-import com.akerimtay.movieapp.utils.PAGING_DEFAULT_NEXT_PAGE
-import com.akerimtay.movieapp.utils.PAGING_DEFAULT_PAGE
 import kotlinx.coroutines.*
 import timber.log.Timber
+
+private const val PAGING_DEFAULT_PAGE = 1
+private const val PAGING_DEFAULT_NEXT_PAGE = 2
 
 class MoviePageDataSource(
     private val movieRepository: MovieRepository,

@@ -23,4 +23,5 @@
     <string name="say_movie_name">Произнесите название фильма</string>
     <string name="retry">Повторить</string>
     <string name="search_empty_format">К сожалению по запросу \“%s\” ничего не найдено</string>
+    <string name="video">Видео</string>
 </resources>

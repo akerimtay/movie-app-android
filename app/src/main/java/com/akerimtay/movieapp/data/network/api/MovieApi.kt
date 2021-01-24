@@ -1,7 +1,8 @@
 package com.akerimtay.movieapp.data.network.api
 
-import com.akerimtay.movieapp.data.model.MovieFull
+import com.akerimtay.movieapp.data.model.MovieDetail
 import com.akerimtay.movieapp.data.model.Movies
+import com.akerimtay.movieapp.data.model.Videos
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -9,7 +10,7 @@ import retrofit2.http.Query
 interface MovieApi {
 
     @GET("movie/{movie_id}")
-    suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieFull
+    suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetail
 
     @GET("movie/top_rated")
     suspend fun getTopRated(): Movies
@@ -28,5 +29,8 @@ interface MovieApi {
         @Query("query") query: String,
         @Query("page") page: Int
     ): Movies
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getVideos(@Path("movie_id") movieId: Int): Videos
 
 }

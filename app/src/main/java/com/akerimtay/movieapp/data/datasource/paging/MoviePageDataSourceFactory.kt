@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.akerimtay.movieapp.data.model.Movie
 import com.akerimtay.movieapp.data.repository.MovieRepository
-import com.akerimtay.movieapp.utils.PAGING_DEFAULT_QUERY
 import kotlinx.coroutines.CoroutineScope
+
+private const val PAGING_DEFAULT_QUERY = "a"
 
 class MoviePageDataSourceFactory(
     private val movieRepository: MovieRepository,
