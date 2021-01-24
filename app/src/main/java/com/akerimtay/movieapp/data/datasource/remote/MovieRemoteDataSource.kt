@@ -36,7 +36,7 @@ class MovieRemoteDataSource(
         }
     }
 
-    suspend fun getMovieDetails(movieId: Int): Resource<MovieFull> {
+    suspend fun getMovieDetails(movieId: Int): Resource<MovieDetail> {
         return try {
             val response = movieApi.getMovieDetails(movieId)
             return responseHandler.handleSuccess(response)
@@ -58,6 +58,15 @@ class MovieRemoteDataSource(
         return try {
             val response = movieApi.search(query, page)
             return responseHandler.handleSuccess(response.movies)
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    suspend fun getVideos(movieId: Int): Resource<Videos> {
+        return try {
+            val response = movieApi.getVideos(movieId)
+            return responseHandler.handleSuccess(response)
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

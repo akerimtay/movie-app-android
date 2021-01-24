@@ -10,10 +10,12 @@ interface MovieRepository {
 
     suspend fun insertCategories(categories: List<Category>)
 
-    suspend fun getMovieDetails(movieId: Int): Resource<MovieFull>
+    suspend fun getMovieDetails(movieId: Int): Resource<MovieDetail>
 
     suspend fun getSimilar(movieId: Int): Resource<Movies>
 
     suspend fun search(query: String, page: Int): Resource<List<Movie>>
+
+    suspend fun getVideos(movieId: Int): Resource<Videos>
 
 }

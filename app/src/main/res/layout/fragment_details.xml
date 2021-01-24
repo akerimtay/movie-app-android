@@ -52,7 +52,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@drawable/rect_shadow_gradient"
+                    android:background="@drawable/rect_shadow_gradient_90"
                     app:layout_collapseMode="parallax" />
 
                 <androidx.appcompat.widget.Toolbar

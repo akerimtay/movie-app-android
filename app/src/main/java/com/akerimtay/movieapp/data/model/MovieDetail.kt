@@ -9,7 +9,7 @@ import java.math.RoundingMode
 import java.util.*
 
 @Parcelize
-data class MovieFull(
+data class MovieDetail(
     @SerializedName("adult") val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("budget") val budget: Int,
@@ -34,7 +34,10 @@ data class MovieFull(
 ) : Parcelable {
 
     fun getVote(): String {
-        return voteAverage.toBigDecimal().setScale(1, RoundingMode.UP).toDouble().toString()
+        return voteAverage.toBigDecimal()
+            .setScale(1, RoundingMode.UP)
+            .toDouble()
+            .toString()
     }
 
     fun getRunTime(context: Context): String {

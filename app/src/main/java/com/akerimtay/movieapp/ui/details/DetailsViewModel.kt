@@ -33,6 +33,12 @@ class DetailsViewModel(
         }
     }
 
+    val videos = movieId.switchMap { id ->
+        liveData {
+            emit(movieRepository.getVideos(id))
+        }
+    }
+
     fun setMovieId(id: Int) {
         _movieId.value = id
     }

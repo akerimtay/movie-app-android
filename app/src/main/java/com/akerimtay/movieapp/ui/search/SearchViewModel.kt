@@ -9,8 +9,9 @@ import androidx.paging.PagedList
 import com.akerimtay.movieapp.data.datasource.paging.MoviePageDataSourceFactory
 import com.akerimtay.movieapp.data.datasource.paging.NetworkState
 import com.akerimtay.movieapp.data.repository.MovieRepository
-import com.akerimtay.movieapp.utils.PAGING_ITEMS_SIZE
-import com.akerimtay.movieapp.utils.PAGING_PREFETCH_DISTANCE
+
+private const val PAGING_ITEMS_SIZE = 20
+private const val PAGING_PREFETCH_DISTANCE = 5
 
 class SearchViewModel(
     movieRepository: MovieRepository

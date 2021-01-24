@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.akerimtay.movieapp.R
 import com.akerimtay.movieapp.data.Resource
-import com.akerimtay.movieapp.data.model.MovieFull
+import com.akerimtay.movieapp.data.model.MovieDetail
 import com.akerimtay.movieapp.databinding.FragmentDetailsBinding
 import com.akerimtay.movieapp.extensions.dpToPx
 import com.akerimtay.movieapp.extensions.loadOriginalImage
@@ -19,6 +19,7 @@ import com.akerimtay.movieapp.extensions.showToast
 import com.akerimtay.movieapp.ui.home.MoviesAdapter
 import com.akerimtay.movieapp.utils.SpaceItemDecoration
 import com.akerimtay.movieapp.utils.getBrowserIntent
+import com.akerimtay.movieapp.utils.getYoutubeIntent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : Fragment() {
@@ -27,6 +28,7 @@ class DetailsFragment : Fragment() {
     private val viewModel: DetailsViewModel by viewModel()
     private val navArgs: DetailsFragmentArgs by navArgs()
 
+    private lateinit var videosAdapter: VideosAdapter
     private lateinit var creditsAdapter: CreditsAdapter
     private lateinit var similarAdapter: MoviesAdapter
 
@@ -54,9 +56,19 @@ class DetailsFragment : Fragment() {
         val spacing = requireContext().dpToPx(24)
         val itemDecoration = SpaceItemDecoration(spacing, SpaceItemDecoration.HORIZONTAL)
 
+        // Videos
+        videosAdapter = VideosAdapter {
+            val intent = getYoutubeIntent(videoId = it.key)
+            startActivity(intent)
+        }
+        with(binding.contentDetails.videoRecycler) {
+            adapter = videosAdapter
+            addItemDecoration(itemDecoration)
+        }
+
         // Credits
         creditsAdapter = CreditsAdapter()
-        binding.contentDetails.creditRecycler.apply {
+        with(binding.contentDetails.creditRecycler) {
             adapter = creditsAdapter
             addItemDecoration(itemDecoration)
         }
@@ -66,7 +78,7 @@ class DetailsFragment : Fragment() {
             //TODO Handle click
             showToast(R.string.on_dev)
         }
-        binding.contentDetails.similarRecycler.apply {
+        with(binding.contentDetails.similarRecycler) {
             adapter = similarAdapter
             addItemDecoration(itemDecoration)
         }
@@ -119,9 +131,21 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+        viewModel.videos.observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Resource.Status.LOADING -> {
+                }
+                Resource.Status.SUCCESS -> {
+                    resource.data?.videos?.let { videosAdapter.setItems(it) }
+                }
+                Resource.Status.ERROR -> {
+                    showToast(resource.message)
+                }
+            }
+        }
     }
 
-    private fun initMovie(movie: MovieFull) {
+    private fun initMovie(movie: MovieDetail) {
         with(binding) {
             contentDetails.layoutContent.isVisible = true
 

@@ -39,6 +39,14 @@ fun ImageView.loadOriginalImage(
         .into(this)
 }
 
+@BindingAdapter(value = ["loadImage", "placeholder"], requireAll = false)
+fun ImageView.loadImage(url: String?, placeholder: Drawable?) {
+    Glide.with(context)
+        .load(url)
+        .placeholder(placeholder)
+        .into(this)
+}
+
 @BindingAdapter("android:visibility")
 fun View.bindVisible(visible: Boolean) {
     isVisible = visible

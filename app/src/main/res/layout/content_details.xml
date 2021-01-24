@@ -141,6 +141,18 @@
                     android:textSize="@dimen/small_text_size"
                     android:visibility="@{viewModel.movie.data.homepage.length() > 0}" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/video_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_video"
+                    tools:paddingStart="16dp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
